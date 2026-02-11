@@ -3,19 +3,33 @@
  version: 2
 
  sources:
-   - name: gz_raw_data
+   - name: raw
      schema: gz_raw_data #Path of the table in BQ
      description: greenwez raw data source #optionnal
      tables:
        - name: sales #Renaming as an alias
          identifier: raw_gz_sales #What is the exact name of the table in  BQ
          description: sales of greewneez / we have one row per product_id found in each order_id
+         # Freshness testing - make sure to fill in the ...
+         loaded_at_field: "CAST(... AS TIMESTAMP)"
+         freshness:
+          warn_after: {count: 90, period: day}      
          columns:
              - name: "(orders_id || '-' || pdt_id)"
                description: primary key of the table
                tests:
                  - unique
                  - not_null
+             - name: date_date
+               description: date of purchase
+             - name: orders_id
+               description: order number
+             - name: products_id
+               description: product number   
+             - name: revenue
+               description: revenue from the purchase
+             - name: quantity
+               description: quantity sold            
        - name: product
          identifier: raw_gz_product
          description: purchase_price by products_id
