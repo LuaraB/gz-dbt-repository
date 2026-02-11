@@ -3,7 +3,7 @@
  version: 2
 
  sources:
-   - name: raw
+   - name: gz_raw_data
      schema: gz_raw_data #Path of the table in BQ
      description: greenwez raw data source #optionnal
      tables:
