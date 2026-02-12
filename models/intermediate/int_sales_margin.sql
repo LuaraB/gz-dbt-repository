@@ -19,7 +19,8 @@ select
     s.*,
     p.purchase_price,
     s.revenue - (s.quantity * p.purchase_price) as margin,
-    s.quantity * p.purchase_price as purchase_cost
+    s.quantity * p.purchase_price as purchase_cost,
+    {{ margin_percent('s.revenue', 'p.purchase_price') }} AS margin_percent
 from sales s
 left join product p 
 using(products_id)
